@@ -24,10 +24,16 @@ jobs:
           cd parent
           git checkout main
 
-      - name: Copy specific folder to parent
+      - name: Copy specific files and folders to parent repo
         run: |
-          rm -rf parent/prompt_main  # optional cleanup
-          cp -r prompt_child/ parent/prompt_main
+          mkdir -p parent/prompt_child
+
+          # Copy all .py, .ipynb, .md files recursively from child repo
+          find . -type f \( -name "*.py" -o -name "*.ipynb" -o -name "*.md" \) -exec cp --parents {} parent/prompt_child/ \;
+
+          # Copy specific folders (adjust as needed)
+          cp -r data parent/prompt_child/
+          cp -r models parent/prompt_child/
 
       - name: Commit & Push to Parent Repo
         run: |
