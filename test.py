@@ -30,4 +30,4 @@ serialized_data = input("Enter serialized data: ")
 try:
     deserialized_data = json.loads(serialized_data)
 except json.JSONDecodeError:
-    print("Invalid data.")
+    print("Invalid data details.")
