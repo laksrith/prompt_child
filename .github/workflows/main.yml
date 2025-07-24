@@ -26,14 +26,18 @@ jobs:
 
       - name: Copy specific files and folders to parent repo
         run: |
-          mkdir -p parent/prompt_child
-
+          cd parent
+          mkdir -p prompt_child
+          cd ..
           # Copy all .py, .ipynb, .md files recursively from child repo
           find . -type f \( -name "*.py" -o -name "*.ipynb" -o -name "*.md" \) -exec cp --parents {} parent/prompt_child/ \;
 
           # Copy specific folders (adjust as needed)
-          cp -r data parent/prompt_child/
-          cp -r models parent/prompt_child/
+          # Copy specific folders (edit or add more as needed)
+          cp -r data parent/synced-folder/ || echo "No data folder found"
+          cp -r models parent/synced-folder/ || echo "No models folder found"
+          #cp -r data parent/prompt_child/
+          #cp -r models parent/prompt_child/
 
       - name: Commit & Push to Parent Repo
         run: |
