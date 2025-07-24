@@ -20,18 +20,18 @@ jobs:
 
       - name: Clone parent repo
         run: |
-          git clone https://x-access-token:${{ secrets.PARENT_REPO_PAT }}@github.com/your-org/parent-repo.git parent
+          git clone https://x-access-token:${{ secrets.PARENT_REPO_PAT }}@github.com/laksrith/prompt_parent.git parent
           cd parent
           git checkout main
 
       - name: Copy specific folder to parent
         run: |
-          rm -rf parent/prompt_demo  # optional cleanup
-          cp -r * parent/prompt_demo
+          rm -rf parent/prompt_main  # optional cleanup
+          cp -r prompt_child/ parent/prompt_main
 
       - name: Commit & Push to Parent Repo
         run: |
           cd parent
-          git add synced-folder
+          git add prompt_child
           git commit -m "Sync from child repo: ${{ github.sha }}" || echo "No changes to commit"
           git push origin main
