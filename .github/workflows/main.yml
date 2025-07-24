@@ -34,8 +34,8 @@ jobs:
 
           # Copy specific folders (adjust as needed)
           # Copy specific folders (edit or add more as needed)
-          cp -r data parent/synced-folder/ || echo "No data folder found"
-          cp -r models parent/synced-folder/ || echo "No models folder found"
+          cp -r data parent/prompt_child/ || echo "No data folder found"
+          cp -r models parent/prompt_child/ || echo "No models folder found"
           #cp -r data parent/prompt_child/
           #cp -r models parent/prompt_child/
 
