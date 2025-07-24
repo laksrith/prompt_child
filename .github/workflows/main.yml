@@ -30,8 +30,9 @@ jobs:
           mkdir -p prompt_child
           cd ..
           # Copy all .py, .ipynb, .md files recursively from child repo
-          find . -type f \( -name "*.py" -o -name "*.ipynb" -o -name "*.md" \) -exec cp --parents {} parent/prompt_child/ \;
-
+          find . -maxdepth 1 -type d -name parent -prune -o -type f \( -name "*.py" -o -name "*.ipynb" -o -name "*.md" \) -exec cp --parents {} parent/prompt_child/ \;
+          #find . -type f \( -name "*.py" -o -name "*.ipynb" -o -name "*.md" \) -exec cp --parents {} parent/prompt_child/ \;
+          cp -r ./parent/prompt_child ../some_target_directory
           # Copy specific folders (adjust as needed)
           # Copy specific folders (edit or add more as needed)
           # cp -r data parent/prompt_child/ || echo "No data folder found"
