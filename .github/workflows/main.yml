@@ -1,0 +1,37 @@
+name: Sync to Parent Folder
+
+on:
+  push:
+    branches:
+      - main  # Or whichever branch you want to monitor
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout child repo
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Clone parent repo
+        run: |
+          git clone https://x-access-token:${{ secrets.PARENT_REPO_PAT }}@github.com/your-org/parent-repo.git parent
+          cd parent
+          git checkout main
+
+      - name: Copy specific folder to parent
+        run: |
+          rm -rf parent/prompt_demo  # optional cleanup
+          cp -r * parent/prompt_demo
+
+      - name: Commit & Push to Parent Repo
+        run: |
+          cd parent
+          git add synced-folder
+          git commit -m "Sync from child repo: ${{ github.sha }}" || echo "No changes to commit"
+          git push origin main
